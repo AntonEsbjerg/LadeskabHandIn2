@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladeskab;
 
 namespace LadeskabHandIn2
 {
-    public class StationControl
+    public class StationControl:IStationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -27,8 +28,22 @@ namespace LadeskabHandIn2
 
         // Her mangler constructor
 
+
+
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+
+        // Her mangler de andre trigger handlere
+        public void DoorOpened()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoorClosed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RFIDDetected(int id)
         {
             switch (_state)
             {
@@ -81,6 +96,9 @@ namespace LadeskabHandIn2
             }
         }
 
-        // Her mangler de andre trigger handlere
+        public bool CheckId(int oldId, int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
