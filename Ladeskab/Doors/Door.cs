@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace Ladeskab
 {
-    internal class Door
+    public class Door:IDoor
     {
+        private bool IsLocked { get; set; }
+        public void OnDoorOpen()
+        {
+            
+        }
+
+        public void OnDoorClose()
+        {
+            
+        }
+
+        public void LockDoor()
+        {
+            
+        }
+
+        public void UnlockDoor()
+        {
+            
+        }
     }
 }

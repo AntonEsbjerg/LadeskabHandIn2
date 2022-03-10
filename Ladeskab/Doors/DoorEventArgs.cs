@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ladeskab.Doors
 {
-    internal class DoorEventArgs
+    public class DoorEventArgs
     {
     }
 }
