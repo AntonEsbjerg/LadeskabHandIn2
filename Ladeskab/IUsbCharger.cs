@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LadeskabHandIn2
+namespace Ladeskab
 {
     public class CurrentEventArgs : EventArgs
     {
