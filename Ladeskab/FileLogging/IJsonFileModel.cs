@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ladeskab
 {
-    interface IJsonFileModel
+    public interface IJsonFileModel
     {
         public uint Rfid { get; set; }
         public DateTime Time { get; set; }
+        public bool IsDoorLocked { get; set; }
     }
 }

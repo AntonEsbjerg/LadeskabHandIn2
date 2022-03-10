@@ -6,5 +6,6 @@ namespace Ladeskab
     {
         public uint Rfid { get; set; }
         public DateTime Time { get; set; }
+        public bool IsDoorLocked { get; set; }
     }
 }
