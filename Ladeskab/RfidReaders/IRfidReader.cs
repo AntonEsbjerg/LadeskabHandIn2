@@ -7,7 +7,7 @@ using Ladeskab.EventArgs;
 
 namespace Ladeskab.RfidReaders
 {
-    interface IRfidReader
+    public interface IRfidReader
     {
         public event EventHandler<RfidEventArgs> RfidEvent;
 
