@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladeskab.Doors;
 
 namespace Ladeskab
 {
@@ -19,13 +20,19 @@ namespace Ladeskab
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger;
+        private IUsbCharger _charger;
         private int _oldId;
         private IDoor _door;
+        public bool CurrentDoorStatus;
+        
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
+        public StationControl(IDoor door)
+        {
+            door.DoorEvent += HandleDoorChangedEvent;
+        }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
@@ -82,5 +89,9 @@ namespace Ladeskab
         }
 
         // Her mangler de andre trigger handlere
+        private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
+        {
+            CurrentDoorStatus = e.IsOpen;
+        }
     }
 }

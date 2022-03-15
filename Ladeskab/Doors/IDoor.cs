@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladeskab.Doors;
 
 namespace Ladeskab
 {
     public interface IDoor
     {
+        event EventHandler<DoorEventArgs> DoorEvent;
         public void OnDoorOpen();
         public void OnDoorClose();
         public void LockDoor();
