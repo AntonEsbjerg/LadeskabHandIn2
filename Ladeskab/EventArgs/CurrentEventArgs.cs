@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ladeskab.Doors
+namespace Ladeskab.EventArgs
 {
-    public class DoorEventArgs : System.EventArgs
+    class CurrentEventArgs : System.EventArgs
     {
-        public bool IsOpen { get; set; }
+        public double Current { get; set; }
     }
 }

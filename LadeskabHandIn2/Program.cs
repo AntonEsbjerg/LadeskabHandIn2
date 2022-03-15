@@ -37,7 +37,7 @@ namespace LadeskabHandIn2
                         System.Console.WriteLine("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
 
-                        int id = Convert.ToInt32(idString);
+                        uint id = Convert.ToUInt16(idString);
                         _rfidReader.OnRfidRead(id);
                         break;
 

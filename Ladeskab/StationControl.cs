@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ladeskab.Doors;
+using Ladeskab.EventArgs;
 
 namespace Ladeskab
 {
@@ -21,21 +22,29 @@ namespace Ladeskab
         // Her mangler flere member variable
         private LadeskabState _state;
         private IUsbCharger _charger;
-        private int _oldId;
+        private uint _oldId;
         private IDoor _door;
         public bool CurrentDoorStatus;
-        
+        //new
+        public double _current;
+
+
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
+
+
         // Her mangler constructor
-        public StationControl(IDoor door)
+        public StationControl(IDoor door, IUsbCharger charger)
         {
             door.DoorEvent += HandleDoorChangedEvent;
+            charger./*ChargerEvent*/ += HandleCurrentChangedEvent;
+
         }
+        
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+        public void OnRfidRead(uint id)
         {
             switch (_state)
             {
@@ -51,12 +60,14 @@ namespace Ladeskab
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        Console.WriteLine("Skabet er låst og din telefon lades. " +
+                                          "Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. " +
+                                          "Prøv igen.");
                     }
 
                     break;
@@ -93,5 +104,18 @@ namespace Ladeskab
         {
             CurrentDoorStatus = e.IsOpen;
         }
+
+
+        private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
+        {
+            _current = e.Current;
+        }
+
+        private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
+        {
+            _oldId = e.Rfid;
+        }
+
+
     }
 }
