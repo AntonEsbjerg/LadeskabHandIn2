@@ -6,8 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LadeskabHandIn2", "LadeskabHandIn2\LadeskabHandIn2.csproj", "{8BC6F2D3-388E-4536-B7EA-0491D92FED35}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LadeskabTest", "LadeskabTest\LadeskabTest.csproj", "{33AC04D8-6DB6-4F75-AE18-6837D06613CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17847FAD-4742-43E2-AFBB-C427EF6D840B} = {17847FAD-4742-43E2-AFBB-C427EF6D840B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ladeskab", "Ladeskab\Ladeskab.csproj", "{17847FAD-4742-43E2-AFBB-C427EF6D840B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ladeskab", "Ladeskab\Ladeskab.csproj", "{17847FAD-4742-43E2-AFBB-C427EF6D840B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

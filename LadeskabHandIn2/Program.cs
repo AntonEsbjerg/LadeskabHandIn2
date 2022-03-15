@@ -19,11 +19,11 @@ namespace LadeskabHandIn2
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input)) continue;
 
-                switch (input[0])
-                {
-                    case 'E':
-                        finish = true;
-                        break;
+//                switch (input[0])
+//                {
+//                    case 'E':
+//                        finish = true;
+//                        break;
 
                     case 'O':
                         _door.OnDoorOpen();
@@ -33,19 +33,19 @@ namespace LadeskabHandIn2
                         _door.OnDoorClose();
                         break;
 
-                    case 'R':
-                        System.Console.WriteLine("Indtast RFID id: ");
-                        string idString = System.Console.ReadLine();
+//                    case 'R':
+//                        System.Console.WriteLine("Indtast RFID id: ");
+//                        string idString = System.Console.ReadLine();
 
                         uint id = Convert.ToUInt16(idString);
                         _rfidReader.OnRfidRead(id);
                         break;
 
-                    default:
-                        break;
-                }
+//                    default:
+//                        break;
+//                }
 
-            } while (!finish);
-        }
-    }
-}
+//            } while (!finish);
+//        }
+//    }
+//}

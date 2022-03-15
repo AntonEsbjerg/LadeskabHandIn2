@@ -70,34 +70,34 @@ namespace Ladeskab
                                           "Prøv igen.");
                     }
 
-                    break;
+//                    break;
 
-                case LadeskabState.DoorOpen:
-                    // Ignore
-                    break;
+//                case LadeskabState.DoorOpen:
+//                    // Ignore
+//                    break;
 
-                case LadeskabState.Locked:
-                    // Check for correct ID
-                    if (id == _oldId)
-                    {
-                        _charger.StopCharge();
-                        _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
+//                case LadeskabState.Locked:
+//                    // Check for correct ID
+//                    if (id == _oldId)
+//                    {
+//                        _charger.StopCharge();
+//                        _door.UnlockDoor();
+//                        using (var writer = File.AppendText(logFile))
+//                        {
+//                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
+//                        }
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
-                        _state = LadeskabState.Available;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Forkert RFID tag");
-                    }
+//                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+//                        _state = LadeskabState.Available;
+//                    }
+//                    else
+//                    {
+//                        Console.WriteLine("Forkert RFID tag");
+//                    }
 
-                    break;
-            }
-        }
+//                    break;
+//            }
+//        }
 
         // Her mangler de andre trigger handlere
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
