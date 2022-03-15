@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ladeskab.EventArgs
 {
-    class CurrentEventArgs : System.EventArgs
+    public class CurrentEventArgs : System.EventArgs
     {
         public double Current { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ladeskab.EventArgs
 {
-    class RfidEventArgs : System.EventArgs
+    public class RfidEventArgs : System.EventArgs
     {
             public uint Rfid { get; set; }
     }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ladeskab.Doors;
 using Ladeskab.EventArgs;
+using Ladeskab.RfidReaders;
 
 namespace Ladeskab
 {
@@ -27,7 +28,7 @@ namespace Ladeskab
         public bool CurrentDoorStatus;
         //new
         public double _current;
-
+        private IRfidReader _reader;
 
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
@@ -35,10 +36,13 @@ namespace Ladeskab
 
 
         // Her mangler constructor
-        public StationControl(IDoor door, IUsbCharger charger)
+        public StationControl(IDoor door, IUsbCharger charger, IRfidReader reader)
         {
             door.DoorEvent += HandleDoorChangedEvent;
-            charger./*ChargerEvent*/ += HandleCurrentChangedEvent;
+
+            //classes needed
+            charger.CurrentValueEvent += HandleCurrentChangedEvent;
+            reader.RfidEvent += HandleRfidChangedEvent;
 
         }
         

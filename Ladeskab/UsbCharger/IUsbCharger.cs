@@ -2,7 +2,7 @@
 
 namespace Ladeskab
 {
-    public class CurrentEventArgs : EventArgs
+    public class CurrentEventArgs : System.EventArgs
     {
         // Value in mA (milliAmpere)
         public double Current { set; get; }
