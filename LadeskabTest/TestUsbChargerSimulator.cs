@@ -5,233 +5,234 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Ladeskab;
+
+//namespace LadeskabTest
+//{
+//    [TestFixture]
+//    public class TestUsbChargerSimulator
+//    {
+//    //    private UsbChargerSimulator _uut;
+//    //    [SetUp]
+//    //    public void Setup()
+//    //    {
+//    //        _uut = new UsbChargerSimulator();
+//    //    }
+
+//        [Test]
+//        public void ctor_IsConnected()
+//        {
+//            Assert.That(_uut.Connected, Is.True);
+//        }
+
+//        [Test]
+//        public void ctor_CurentValueIsZero()
+//        {
+//            Assert.That(_uut.CurrentValue, Is.Zero);
+//        }
+
+//        [Test]
+//        public void SimulateDisconnected_ReturnsDisconnected()
+//        {
+//            _uut.SimulateConnected(false);
+//            Assert.That(_uut.Connected, Is.False);
+//        }
 
-namespace LadeskabTest
-{
-    [TestFixture]
-    public class TestUsbChargerSimulator
-    {
-        private UsbChargerSimulator _uut;
-        [SetUp]
-        public void Setup()
-        {
-            _uut = new UsbChargerSimulator();
-        }
+//        [Test]
+//        public void Started_WaitSomeTime_ReceivedSeveralValues()
+//        {
+//            int numValues = 0;
+//            _uut.CurrentValueEvent += (o, args) => numValues++;
 
-        [Test]
-        public void ctor_IsConnected()
-        {
-            Assert.That(_uut.Connected, Is.True);
-        }
-
-        [Test]
-        public void ctor_CurentValueIsZero()
-        {
-            Assert.That(_uut.CurrentValue, Is.Zero);
-        }
+//            _uut.StartCharge();
 
-        [Test]
-        public void SimulateDisconnected_ReturnsDisconnected()
-        {
-            _uut.SimulateConnected(false);
-            Assert.That(_uut.Connected, Is.False);
-        }
+//            System.Threading.Thread.Sleep(1100);
 
-        [Test]
-        public void Started_WaitSomeTime_ReceivedSeveralValues()
-        {
-            int numValues = 0;
-            _uut.CurrentValueEvent += (o, args) => numValues++;
+//            Assert.That(numValues, Is.GreaterThan(4));
+//        }
 
-            _uut.StartCharge();
+//        [Test]
+//        public void Started_WaitSomeTime_ReceivedChangedValue()
+//        {
+//            double lastValue = 1000;
+//            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
-            System.Threading.Thread.Sleep(1100);
+//            _uut.StartCharge();
 
-            Assert.That(numValues, Is.GreaterThan(4));
-        }
+//            System.Threading.Thread.Sleep(300);
 
-        [Test]
-        public void Started_WaitSomeTime_ReceivedChangedValue()
-        {
-            double lastValue = 1000;
-            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
+//            Assert.That(lastValue, Is.LessThan(500.0));
+//        }
 
-            _uut.StartCharge();
+//        [Test]
+//        public void StartedNoEventReceiver_WaitSomeTime_PropertyChangedValue()
+//        {
+//            _uut.StartCharge();
 
-            System.Threading.Thread.Sleep(300);
+//            System.Threading.Thread.Sleep(300);
 
-            Assert.That(lastValue, Is.LessThan(500.0));
-        }
+//            Assert.That(_uut.CurrentValue, Is.LessThan(500.0));
+//        }
 
-        [Test]
-        public void StartedNoEventReceiver_WaitSomeTime_PropertyChangedValue()
-        {
-            _uut.StartCharge();
+//        [Test]
+//        public void Started_WaitSomeTime_PropertyMatchesReceivedValue()
+//        {
+//            double lastValue = 1000;
+//            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
-            System.Threading.Thread.Sleep(300);
+//            _uut.StartCharge();
 
-            Assert.That(_uut.CurrentValue, Is.LessThan(500.0));
-        }
+//            System.Threading.Thread.Sleep(1100);
 
-        [Test]
-        public void Started_WaitSomeTime_PropertyMatchesReceivedValue()
-        {
-            double lastValue = 1000;
-            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
+//            Assert.That(lastValue, Is.EqualTo(_uut.CurrentValue));
+//        }
 
-            _uut.StartCharge();
 
-            System.Threading.Thread.Sleep(1100);
+//        [Test]
+//        public void Started_SimulateOverload_ReceivesHighValue()
+//        {
+//            ManualResetEvent pause = new ManualResetEvent(false);
+//            double lastValue = 0;
 
-            Assert.That(lastValue, Is.EqualTo(_uut.CurrentValue));
-        }
+//            _uut.CurrentValueEvent += (o, args) =>
+//            {
+//                lastValue = args.Current;
+//                pause.Set();
+//            };
 
+//            // Start
+//            _uut.StartCharge();
 
-        [Test]
-        public void Started_SimulateOverload_ReceivesHighValue()
-        {
-            ManualResetEvent pause = new ManualResetEvent(false);
-            double lastValue = 0;
+//            // Next value should be high
+//            _uut.SimulateOverload(true);
 
-            _uut.CurrentValueEvent += (o, args) =>
-            {
-                lastValue = args.Current;
-                pause.Set();
-            };
+//            // Reset event
+//            pause.Reset();
 
-            // Start
-            _uut.StartCharge();
+//            // Wait for next tick, should send overloaded value
+//            pause.WaitOne(300);
 
-            // Next value should be high
-            _uut.SimulateOverload(true);
+//            Assert.That(lastValue, Is.GreaterThan(500.0));
+//        }
 
-            // Reset event
-            pause.Reset();
+//        [Test]
+//        public void Started_SimulateDisconnected_ReceivesZero()
+//        {
+//            ManualResetEvent pause = new ManualResetEvent(false);
+//            double lastValue = 1000;
 
-            // Wait for next tick, should send overloaded value
-            pause.WaitOne(300);
+//            _uut.CurrentValueEvent += (o, args) =>
+//            {
+//                lastValue = args.Current;
+//                pause.Set();
+//            };
 
-            Assert.That(lastValue, Is.GreaterThan(500.0));
-        }
 
-        [Test]
-        public void Started_SimulateDisconnected_ReceivesZero()
-        {
-            ManualResetEvent pause = new ManualResetEvent(false);
-            double lastValue = 1000;
+//            // Start
+//            _uut.StartCharge();
 
-            _uut.CurrentValueEvent += (o, args) =>
-            {
-                lastValue = args.Current;
-                pause.Set();
-            };
+//            // Next value should be zero
+//            _uut.SimulateConnected(false);
 
+//            // Reset event
+//            pause.Reset();
 
-            // Start
-            _uut.StartCharge();
+//            // Wait for next tick, should send disconnected value
+//            pause.WaitOne(300);
 
-            // Next value should be zero
-            _uut.SimulateConnected(false);
+//            Assert.That(lastValue, Is.Zero);
+//        }
 
-            // Reset event
-            pause.Reset();
+//        [Test]
+//        public void SimulateOverload_Start_ReceivesHighValueImmediately()
+//        {
+//            double lastValue = 0;
 
-            // Wait for next tick, should send disconnected value
-            pause.WaitOne(300);
+//            _uut.CurrentValueEvent += (o, args) =>
+//            {
+//                lastValue = args.Current;
+//            };
 
-            Assert.That(lastValue, Is.Zero);
-        }
+//            // First value should be high
+//            _uut.SimulateOverload(true);
 
-        [Test]
-        public void SimulateOverload_Start_ReceivesHighValueImmediately()
-        {
-            double lastValue = 0;
+//            // Start
+//            _uut.StartCharge();
 
-            _uut.CurrentValueEvent += (o, args) =>
-            {
-                lastValue = args.Current;
-            };
+//            // Should not wait for first tick, should send overload immediately
 
-            // First value should be high
-            _uut.SimulateOverload(true);
+//            Assert.That(lastValue, Is.GreaterThan(500.0));
+//        }
 
-            // Start
-            _uut.StartCharge();
+//        [Test]
+//        public void SimulateDisconnected_Start_ReceivesZeroValueImmediately()
+//        {
+//            double lastValue = 1000;
 
-            // Should not wait for first tick, should send overload immediately
+//            _uut.CurrentValueEvent += (o, args) =>
+//            {
+//                lastValue = args.Current;
+//            };
 
-            Assert.That(lastValue, Is.GreaterThan(500.0));
-        }
+//            // First value should be high
+//            _uut.SimulateConnected(false);
 
-        [Test]
-        public void SimulateDisconnected_Start_ReceivesZeroValueImmediately()
-        {
-            double lastValue = 1000;
+//            // Start
+//            _uut.StartCharge();
 
-            _uut.CurrentValueEvent += (o, args) =>
-            {
-                lastValue = args.Current;
-            };
+//            // Should not wait for first tick, should send zero immediately
 
-            // First value should be high
-            _uut.SimulateConnected(false);
+//            Assert.That(lastValue, Is.Zero);
+//        }
 
-            // Start
-            _uut.StartCharge();
+//        [Test]
+//        public void StopCharge_IsCharging_ReceivesZeroValue()
+//        {
+//            double lastValue = 1000;
+//            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
-            // Should not wait for first tick, should send zero immediately
+//            _uut.StartCharge();
 
-            Assert.That(lastValue, Is.Zero);
-        }
+//            System.Threading.Thread.Sleep(300);
 
-        [Test]
-        public void StopCharge_IsCharging_ReceivesZeroValue()
-        {
-            double lastValue = 1000;
-            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
+//            _uut.StopCharge();
 
-            _uut.StartCharge();
+//            Assert.That(lastValue, Is.EqualTo(0.0));
+//        }
 
-            System.Threading.Thread.Sleep(300);
+//        [Test]
+//        public void StopCharge_IsCharging_PropertyIsZero()
+//        {
+//            _uut.StartCharge();
 
-            _uut.StopCharge();
+//            System.Threading.Thread.Sleep(300);
 
-            Assert.That(lastValue, Is.EqualTo(0.0));
-        }
+//            _uut.StopCharge();
 
-        [Test]
-        public void StopCharge_IsCharging_PropertyIsZero()
-        {
-            _uut.StartCharge();
+//            Assert.That(_uut.CurrentValue, Is.EqualTo(0.0));
+//        }
 
-            System.Threading.Thread.Sleep(300);
+//        [Test]
+//        public void StopCharge_IsCharging_ReceivesNoMoreValues()
+//        {
+//            double lastValue = 1000;
+//            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
-            _uut.StopCharge();
+//            _uut.StartCharge();
 
-            Assert.That(_uut.CurrentValue, Is.EqualTo(0.0));
-        }
+//            System.Threading.Thread.Sleep(300);
 
-        [Test]
-        public void StopCharge_IsCharging_ReceivesNoMoreValues()
-        {
-            double lastValue = 1000;
-            _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
+//            _uut.StopCharge();
+//            lastValue = 1000;
 
-            _uut.StartCharge();
+//            // Wait for a tick
+//            System.Threading.Thread.Sleep(300);
 
-            System.Threading.Thread.Sleep(300);
+//            // No new value received
+//            Assert.That(lastValue, Is.EqualTo(1000.0));
+//        }
 
-            _uut.StopCharge();
-            lastValue = 1000;
 
-            // Wait for a tick
-            System.Threading.Thread.Sleep(300);
 
-            // No new value received
-            Assert.That(lastValue, Is.EqualTo(1000.0));
-        }
-
-
-
-    }
-}
+//    }
+//}
