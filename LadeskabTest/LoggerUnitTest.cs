@@ -27,16 +27,17 @@ namespace LadeskabTest
         public void LogDoorLocked(uint rfid)
         {
             DateTime time= DateTime.Now;
-            List<IJsonFileModel> jsonList = new List<IJsonFileModel>();
-            jsonList.Add(new JsonFileModel()
+            IJsonFileModel expected = 
+            new JsonFileModel()
             {
                 Rfid = rfid,
                 Time = time,
                 IsDoorLocked = true
-            });
-            string expected= JsonSerializer.Serialize(jsonList);
-            string result=_uut.LogDoorLocked(rfid,time);
-            Assert.That(result,Is.EqualTo(expected));
+            };
+            IJsonFileModel jsonFileModel = _uut.LogDoorLocked(rfid, time);
+            Assert.That(jsonFileModel.Time, Is.EqualTo(expected.Time));
+            Assert.That(jsonFileModel.IsDoorLocked, Is.EqualTo(expected.IsDoorLocked));
+            Assert.That(jsonFileModel.Rfid, Is.EqualTo(expected.Rfid));
         }
         [TestCase(12u)]
         [TestCase(uint.MinValue)]
@@ -44,16 +45,17 @@ namespace LadeskabTest
         public void LogDoorUnlocked(uint rfid)
         {
             DateTime time = DateTime.Now;
-            List<IJsonFileModel> jsonList = new List<IJsonFileModel>();
-            jsonList.Add(new JsonFileModel()
-            {
-                Rfid = rfid,
-                Time = time,
-                IsDoorLocked = false
-            });
-            string expected = JsonSerializer.Serialize(jsonList);
-            string result = _uut.LogDoorUnlocked(rfid, time);
-            Assert.That(result, Is.EqualTo(expected));
+            IJsonFileModel expected =
+                new JsonFileModel()
+                {
+                    Rfid = rfid,
+                    Time = time,
+                    IsDoorLocked = false
+                };
+            IJsonFileModel jsonFileModel = _uut.LogDoorUnlocked(rfid, time);
+            Assert.That(jsonFileModel.Time, Is.EqualTo(expected.Time));
+            Assert.That(jsonFileModel.IsDoorLocked, Is.EqualTo(expected.IsDoorLocked));
+            Assert.That(jsonFileModel.Rfid, Is.EqualTo(expected.Rfid));
         }
     }
 }
