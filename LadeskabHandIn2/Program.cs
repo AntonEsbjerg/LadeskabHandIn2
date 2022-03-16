@@ -17,7 +17,7 @@ namespace LadeskabHandIn2
                 string input;
                 System.Console.WriteLine("Indtast E, O, C, R: ");
                 input = Console.ReadLine();
-                if (string.IsNullOrEmpty(input)) continue;
+                if (string.IsNullOrWhiteSpace(input)) continue;
 
 //                switch (input[0])
 //                {

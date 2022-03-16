@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladeskab;
 using Ladeskab.Doors;
 using Ladeskab.EventArgs;
 using Ladeskab.RfidReaders;
 
 namespace Ladeskab
 {
-    public class StationControl
+    public class StationControl:IStationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -48,7 +49,19 @@ namespace Ladeskab
         
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        public void OnRfidRead(uint id)
+
+        // Her mangler de andre trigger handlere
+        public void DoorOpened()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoorClosed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RFIDDetected(int id)
         {
             switch (_state)
             {
@@ -121,5 +134,9 @@ namespace Ladeskab
         }
 
 
+        public bool CheckId(int oldId, int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
