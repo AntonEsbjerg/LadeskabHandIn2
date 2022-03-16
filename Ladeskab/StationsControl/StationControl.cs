@@ -13,7 +13,6 @@ namespace Ladeskab
 {
     public class StationControl : IStationControl
     {
-        // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
         {
             Available,
@@ -21,7 +20,6 @@ namespace Ladeskab
             DoorOpen
         };
 
-        // Her mangler flere member variable
         private LadeskabState _state;
         private uint _oldId;
         private IDoor _door;
@@ -30,39 +28,27 @@ namespace Ladeskab
         public bool CurrentDoorStatus;
         private IRfidReader _reader;
 
-
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-
-
-        // Her mangler constructor
         public StationControl(IDoor door, IChargeControl charger, IRfidReader reader, IDisplay display)
         {
             _door = door;
             chargeControl = charger;
             _reader = reader;
-
             _display = display;
 
             door.DoorEvent += HandleDoorChangedEvent;
-
-            //classes needed
             reader.RfidEvent += HandleRfidChangedEvent;
-
         }
         
-
-        // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-
-        // Her mangler de andre trigger handlere
         public void DoorOpened()
         {
-            throw new NotImplementedException();
+            _display.Print("Tilslut telefon");
         }
 
         public void DoorClosed()
         {
-            throw new NotImplementedException();
+            _display.Print("Indlæs RFID");
         }
 
         public void RFIDDetected(uint id)
@@ -70,8 +56,6 @@ namespace Ladeskab
             switch (_state)
             {
                 case LadeskabState.Available:
-
-                    // Check for ladeforbindelse
                     if (chargeControl.IsConnected())
                     {
                         _door.LockDoor();
@@ -100,7 +84,6 @@ namespace Ladeskab
                     break;
 
                 case LadeskabState.Locked:
-                    // Check for correct ID
                     if (CheckId(_oldId, id))
                     {
                         chargeControl.StopCharge();
@@ -122,7 +105,6 @@ namespace Ladeskab
             }
         }
 
-        // Her mangler de andre trigger handlere
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
         {
             CurrentDoorStatus = e.IsOpen;
@@ -133,10 +115,12 @@ namespace Ladeskab
             RFIDDetected(e.Rfid);
         }
 
-
-        public bool CheckId(int oldId, int Id)
+        public bool CheckId(uint oldId, uint Id)
         {
-            throw new NotImplementedException();
+            if (Id == oldId)
+                return true;
+
+            return false;
         }
     }
 }
