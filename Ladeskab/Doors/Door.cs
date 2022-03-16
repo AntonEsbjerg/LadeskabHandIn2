@@ -13,24 +13,22 @@ namespace Ladeskab
         public event EventHandler<DoorEventArgs> DoorEvent;
         public void OnDoorOpen()
         {
-            Console.WriteLine("Tilslut Telefon");
+            OnDoorChanged(new DoorEventArgs { IsOpen = true });
         }
 
         public void OnDoorClose()
         {
-            Console.WriteLine("Indlæs RFID");
+            OnDoorChanged(new DoorEventArgs { IsOpen = false });
         }
 
         public void LockDoor()
         {
             IsLocked = true;
-            OnDoorChanged(new DoorEventArgs{ IsOpen = IsLocked });
         }
 
         public void UnlockDoor()
         {
             IsLocked = false;
-            OnDoorChanged(new DoorEventArgs{ IsOpen = IsLocked });
         }
 
         protected virtual void OnDoorChanged(DoorEventArgs e)

@@ -9,6 +9,7 @@ namespace LadeskabHandIn2
         private static IDoor _door;
         private static IStationControl _control;
         private static IUsbCharger _usbCharger;
+        private static IChargeControl _chargeControl;
         private static IRfidReader _rfidReader;
         private static IDisplay _display;
         static void Main(string[] args)
@@ -16,9 +17,11 @@ namespace LadeskabHandIn2
             // Assemble your system here from all the classes
             _door = new Door();
             _usbCharger = new UsbChargerSimulator();
+            _chargeControl = new ChargeControl(_usbCharger);
             _rfidReader = new RfidReader();
             _display = new Display();
-            _control = new StationControl(_door, _usbCharger, _rfidReader,_display);
+
+            _control = new StationControl(_door, _chargeControl, _rfidReader,_display);
             bool finish = false;
             do
             {

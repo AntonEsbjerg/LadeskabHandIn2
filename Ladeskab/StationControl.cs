@@ -28,7 +28,6 @@ namespace Ladeskab
         private IDisplay _display;
         private IChargeControl chargeControl;
         public bool CurrentDoorStatus;
-        //new
         private IRfidReader _reader;
 
 
@@ -37,10 +36,10 @@ namespace Ladeskab
 
 
         // Her mangler constructor
-        public StationControl(IDoor door, IRfidReader reader, IDisplay display)
+        public StationControl(IDoor door, IChargeControl charger, IRfidReader reader, IDisplay display)
         {
             _door = door;
-            _charger = charger;
+            chargeControl = charger;
             _reader = reader;
 
             _display = display;
@@ -75,7 +74,6 @@ namespace Ladeskab
                     // Check for ladeforbindelse
                     if (chargeControl.IsConnected())
                     {
-                        _charger.StartCharge();
                         _door.LockDoor();
                         chargeControl.StartCharge();
                         _oldId = id;
