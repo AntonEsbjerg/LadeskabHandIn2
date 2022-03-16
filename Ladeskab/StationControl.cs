@@ -11,7 +11,7 @@ using Ladeskab.RfidReaders;
 
 namespace Ladeskab
 {
-    public class StationControl:IStationControl
+    public class StationControl : IStationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
