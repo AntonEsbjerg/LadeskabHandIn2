@@ -136,14 +136,9 @@ namespace Ladeskab
         }
 
 
-        public bool CheckId(uint oldId, uint Id)
+        public bool CheckId(int oldId, int Id)
         {
-            if (Id == _oldId)
-            {
-                return true;
-            }
-
-            return false;
+            throw new NotImplementedException();
         }
     }
 }
