@@ -17,7 +17,7 @@ namespace LadeskabTest
         {
             _door = Substitute.For<IDoor>();
 
-            _uut = new StationControl(_door);
+            //_uut = new StationControl(_door);
         }
         
         // Vi får testet vores StationControl observer er koblet til door event
