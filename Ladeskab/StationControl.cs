@@ -61,7 +61,7 @@ namespace Ladeskab
             throw new NotImplementedException();
         }
 
-        public void RFIDDetected(int id)
+        public void RFIDDetected(uint id)
         {
             switch (_state)
             {
@@ -134,7 +134,7 @@ namespace Ladeskab
         }
 
 
-        public bool CheckId(int oldId, int Id)
+        public bool CheckId(uint oldId, uint Id)
         {
             throw new NotImplementedException();
         }

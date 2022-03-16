@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,9 +20,15 @@ namespace Ladeskab
             };
             string json = JsonSerializer.Serialize(jsonInput);
             var path = Environment.CurrentDirectory;
-            string[] splitStrings = path.Split(@"\LadeskabHandIn2");
-            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log", json);
-            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log");
+            string fileTime = time.ToString(CultureInfo.CurrentCulture);
+            string[] splitStrings = path.Split(@"\LadeskabHandIn2");;
+            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            foreach (char c in invalid)
+            {
+                 fileTime= fileTime.Replace(c.ToString(), "");
+            }
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime +" Locked", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime+ " Locked");
             IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
             return model;
         }
@@ -36,9 +43,15 @@ namespace Ladeskab
                 };
             string json = JsonSerializer.Serialize(jsonInput);
             var path = Environment.CurrentDirectory;
-            string[] splitStrings = path.Split(@"\LadeskabHandIn2");
-            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log", json);
-            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log");
+            string fileTime = time.ToLongTimeString();
+            string[] splitStrings = path.Split(@"\LadeskabHandIn2"); ;
+            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            foreach (char c in invalid)
+            {
+                fileTime = fileTime.Replace(c.ToString(), "");
+            }
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime+ " Unlocked", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime + " Unlocked");
             IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
             return model;
         }
