@@ -16,8 +16,6 @@ namespace Ladeskab.RfidReaders
             OnRfidChange(new RfidEventArgs { Rfid = id });
         }
 
-
-
         protected virtual void OnRfidChange(RfidEventArgs e)
         {
             RfidEvent?.Invoke(this, e);
