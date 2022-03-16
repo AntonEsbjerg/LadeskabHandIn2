@@ -8,29 +8,39 @@ namespace Ladeskab
 {
     public class JsonLogger: IJsonLogger
     {
-        public string LogDoorLocked(uint rfid, DateTime time)
+        public IJsonFileModel LogDoorLocked(uint rfid, DateTime time)
         {
-            List<IJsonFileModel> jsonList = new List<IJsonFileModel>();
-            jsonList.Add(new JsonFileModel()
+            IJsonFileModel jsonInput=
+            new JsonFileModel()
             {
                 Rfid = rfid,
                 Time = time,
                 IsDoorLocked= true
-            });
-            string json = JsonSerializer.Serialize(jsonList);
-            return json;
+            };
+            string json = JsonSerializer.Serialize(jsonInput);
+            var path = Environment.CurrentDirectory;
+            string[] splitStrings = path.Split(@"\LadeskabHandIn2");
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log");
+            IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
+            return model;
         }
-        public string LogDoorUnlocked(uint rfid, DateTime time)
+        public IJsonFileModel LogDoorUnlocked(uint rfid, DateTime time)
         {
-            List<IJsonFileModel> jsonList = new List<IJsonFileModel>();
-            jsonList.Add(new JsonFileModel()
-            {
-                Rfid = rfid,
-                Time = time,
-                IsDoorLocked = false
-            });
-            string json = JsonSerializer.Serialize(jsonList);
-            return json;
+            IJsonFileModel jsonInput =
+                new JsonFileModel()
+                {
+                    Rfid = rfid,
+                    Time = time,
+                    IsDoorLocked = false
+                };
+            string json = JsonSerializer.Serialize(jsonInput);
+            var path = Environment.CurrentDirectory;
+            string[] splitStrings = path.Split(@"\LadeskabHandIn2");
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log");
+            IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
+            return model;
         }
     }
 }
