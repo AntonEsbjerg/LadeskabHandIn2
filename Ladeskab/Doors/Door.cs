@@ -13,7 +13,10 @@ namespace Ladeskab
         public event EventHandler<DoorEventArgs> DoorEvent;
         public void OnDoorOpen()
         {
-            OnDoorChanged(new DoorEventArgs { IsOpen = true });
+            if (!IsLocked)
+            {
+                OnDoorChanged(new DoorEventArgs { IsOpen = true });
+            }
         }
 
         public void OnDoorClose()
