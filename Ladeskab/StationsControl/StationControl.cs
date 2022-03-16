@@ -13,14 +13,14 @@ namespace Ladeskab
 {
     public class StationControl : IStationControl
     {
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
             DoorOpen
         };
 
-        private LadeskabState _state;
+        public LadeskabState _state;
         private uint _oldId;
         private IDoor _door;
         private IDisplay _display;

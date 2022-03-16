@@ -19,7 +19,6 @@ namespace LadeskabTest
             _receivedEventArgs = null;
             _uut = new RfidReader();
 
-
             //Event listener to check the event occurence and event data
             _uut.RfidEvent +=
                 (o, args) =>
@@ -36,8 +35,6 @@ namespace LadeskabTest
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
-
-
         [TestCase(12378)]
         [TestCase(12345678)]
         [TestCase(12323545678)]
@@ -51,13 +48,5 @@ namespace LadeskabTest
 
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
-
-
-
-
-
-
-
-
     }
 }
