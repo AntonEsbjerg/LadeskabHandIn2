@@ -21,7 +21,7 @@ namespace Ladeskab
         };
 
         public LadeskabState _state;
-        private uint _oldId;
+        public uint _oldId;
         private IDoor _door;
         private IDisplay _display;
         private IChargeControl _chargeControl;
