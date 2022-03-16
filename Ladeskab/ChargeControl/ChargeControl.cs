@@ -4,7 +4,7 @@ namespace Ladeskab
 {
     public class ChargeControl: IChargeControl
     {
-        private bool Connected { get; set; }
+        public bool Connected { get; set; }
         private IUsbCharger Charger { get; set; }
 
         //new
@@ -15,10 +15,6 @@ namespace Ladeskab
             charger.CurrentValueEvent += HandleCurrentChangedEvent;
         }
 
-        public bool IsConnected()
-        {
-            return Connected;
-        }
 
         public void StartCharge()
         {
