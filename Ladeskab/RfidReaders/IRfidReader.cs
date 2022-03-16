@@ -13,5 +13,8 @@ namespace Ladeskab.RfidReaders
 
 
 
+
+        public void ReadRfid(uint id);
+
     }
 }

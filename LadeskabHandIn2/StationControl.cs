@@ -53,16 +53,15 @@ namespace Ladeskab
             switch (_state)
             {
                 case LadeskabState.Available:
-
                     // Check for ladeforbindelse
-
-
-
                     if (_charger.Connected)
                     {
                         _door.LockDoor();
                         _charger.StartCharge();
-                        _reader.ReadRfid(id);
+                        
+
+                                                //_oldId = id;
+
 
                         using (var writer = File.AppendText(logFile))
                         {
@@ -81,9 +80,13 @@ namespace Ladeskab
 
                     break;
 
+
+
                 case LadeskabState.DoorOpen:
-                    Console.WriteLine("The door is open...");
+                    // Ignore
                     break;
+
+
 
                 case LadeskabState.Locked:
                     // Check for correct ID
