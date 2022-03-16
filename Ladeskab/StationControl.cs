@@ -23,12 +23,11 @@ namespace Ladeskab
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IUsbCharger _charger;
         private uint _oldId;
         private IDoor _door;
+        private IChargeControl chargeControl;
         public bool CurrentDoorStatus;
         //new
-        public double _current;
         private IRfidReader _reader;
 
 
@@ -37,12 +36,11 @@ namespace Ladeskab
 
 
         // Her mangler constructor
-        public StationControl(IDoor door, IUsbCharger charger, IRfidReader reader)
+        public StationControl(IDoor door, IRfidReader reader)
         {
             door.DoorEvent += HandleDoorChangedEvent;
 
             //classes needed
-            charger.CurrentValueEvent += HandleCurrentChangedEvent;
             reader.RfidEvent += HandleRfidChangedEvent;
 
         }
@@ -67,10 +65,10 @@ namespace Ladeskab
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (chargeControl.IsConnected())
                     {
                         _door.LockDoor();
-                        _charger.StartCharge();
+                        chargeControl.StartCharge();
                         _oldId = id;
                         using (var writer = File.AppendText(logFile))
                         {
@@ -97,7 +95,7 @@ namespace Ladeskab
                     // Check for correct ID
                     if (id == _oldId)
                     {
-                        _charger.StopCharge();
+                        chargeControl.StopCharge();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {
@@ -120,12 +118,6 @@ namespace Ladeskab
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
         {
             CurrentDoorStatus = e.IsOpen;
-        }
-
-
-        private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
-        {
-            _current = e.Current;
         }
 
         private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
