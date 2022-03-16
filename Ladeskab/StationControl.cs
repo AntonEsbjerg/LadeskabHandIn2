@@ -23,13 +23,12 @@ namespace Ladeskab
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IUsbCharger _charger;
         private uint _oldId;
         private IDoor _door;
         private IDisplay _display;
+        private IChargeControl chargeControl;
         public bool CurrentDoorStatus;
         //new
-        public double _current;
         private IRfidReader _reader;
 
 
@@ -38,7 +37,7 @@ namespace Ladeskab
 
 
         // Her mangler constructor
-        public StationControl(IDoor door, IUsbCharger charger, IRfidReader reader, IDisplay display)
+        public StationControl(IDoor door, IRfidReader reader, IDisplay display)
         {
             _door = door;
             _charger = charger;
@@ -49,7 +48,6 @@ namespace Ladeskab
             door.DoorEvent += HandleDoorChangedEvent;
 
             //classes needed
-            charger.CurrentValueEvent += HandleCurrentChangedEvent;
             reader.RfidEvent += HandleRfidChangedEvent;
 
         }
@@ -75,12 +73,11 @@ namespace Ladeskab
                 case LadeskabState.Available:
 
                     // Check for ladeforbindelse
-
-
-                    if (_charger.Connected)
+                    if (chargeControl.IsConnected())
                     {
                         _charger.StartCharge();
                         _door.LockDoor();
+                        chargeControl.StartCharge();
                         _oldId = id;
                         
                         using (var writer = File.AppendText(logFile))
@@ -108,7 +105,7 @@ namespace Ladeskab
                     // Check for correct ID
                     if (CheckId(_oldId, id))
                     {
-                        _charger.StopCharge();
+                        chargeControl.StopCharge();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {
@@ -131,12 +128,6 @@ namespace Ladeskab
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
         {
             CurrentDoorStatus = e.IsOpen;
-        }
-
-
-        private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
-        {
-            _current = e.Current;
         }
 
         private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
