@@ -6,7 +6,7 @@ namespace LadeskabHandIn2
     class Program
     {
         private static Door _door;
-        private static StationControl _rfidReader;
+        private static StationControl control;
         static void Main(string[] args)
         {
 				// Assemble your system here from all the classes
@@ -34,11 +34,12 @@ namespace LadeskabHandIn2
                         break;
 
                     case 'R':
-                        System.Console.WriteLine("Indtast RFID id: ");
+                        Console.WriteLine("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
 
                         uint id = Convert.ToUInt16(idString);
-                        _rfidReader.OnRfidRead(id);
+
+                        control.OnRfidRead(id);
                         break;
 
                     default:
