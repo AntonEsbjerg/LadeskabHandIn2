@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ladeskab
 {
-    interface IStationControl
+    public interface IStationControl
     {
         public void DoorOpened();
         public void DoorClosed();
-        public void RFIDDetected(int id);
-        public bool CheckId(int oldId, int Id);
+        public void RFIDDetected(uint id);
+        public bool CheckId(uint oldId, uint Id);
     }
 }

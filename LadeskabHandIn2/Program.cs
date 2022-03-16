@@ -1,16 +1,24 @@
 ﻿using System;
 using Ladeskab;
+using Ladeskab.RfidReaders;
 
 namespace LadeskabHandIn2
 {
     class Program
     {
-        private static Door _door;
-        private static StationControl control;
+        private static IDoor _door;
+        private static IStationControl _control;
+        private static IUsbCharger _usbCharger;
+        private static IRfidReader _rfidReader;
+        private static IDisplay _display;
         static void Main(string[] args)
         {
-				// Assemble your system here from all the classes
-            
+            // Assemble your system here from all the classes
+            _door = new Door();
+            _usbCharger = new UsbChargerSimulator();
+            _rfidReader = new RfidReader();
+            _display = new Display();
+            _control = new StationControl(_door, _usbCharger, _rfidReader,_display);
             bool finish = false;
             do
             {
@@ -39,7 +47,7 @@ namespace LadeskabHandIn2
 
                         uint id = Convert.ToUInt16(idString);
 
-                        control.RFIDDetected(id);
+                        _rfidReader.ReadRfid(id);
                         break;
 
                     default:

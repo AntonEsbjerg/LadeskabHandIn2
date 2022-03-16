@@ -26,6 +26,7 @@ namespace Ladeskab
         private IUsbCharger _charger;
         private uint _oldId;
         private IDoor _door;
+        private IDisplay _display;
         public bool CurrentDoorStatus;
         //new
         public double _current;
@@ -37,8 +38,14 @@ namespace Ladeskab
 
 
         // Her mangler constructor
-        public StationControl(IDoor door, IUsbCharger charger, IRfidReader reader)
+        public StationControl(IDoor door, IUsbCharger charger, IRfidReader reader, IDisplay display)
         {
+            _door = door;
+            _charger = charger;
+            _reader = reader;
+
+            _display = display;
+
             door.DoorEvent += HandleDoorChangedEvent;
 
             //classes needed
@@ -70,37 +77,36 @@ namespace Ladeskab
                     // Check for ladeforbindelse
 
 
-
                     if (_charger.Connected)
                     {
-                        _door.LockDoor();
                         _charger.StartCharge();
-                        _reader.ReadRfid(id);
-
+                        _door.LockDoor();
+                        _oldId = id;
+                        
                         using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. " +
+                        _display.Print("Skabet er låst og din telefon lades. " +
                                           "Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. " +
+                        _display.Print("Din telefon er ikke ordentlig tilsluttet. " +
                                           "Prøv igen.");
                     }
 
                     break;
 
                 case LadeskabState.DoorOpen:
-                    Console.WriteLine("The door is open...");
+                    _display.Print("The door is open...");
                     break;
 
                 case LadeskabState.Locked:
                     // Check for correct ID
-                    if (id == _oldId)
+                    if (CheckId(_oldId, id))
                     {
                         _charger.StopCharge();
                         _door.UnlockDoor();
@@ -109,12 +115,12 @@ namespace Ladeskab
                             writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        _display.Print("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        _display.Print("Forkert RFID tag"); //RFID Fejl
                     }
 
                     break;
@@ -135,13 +141,18 @@ namespace Ladeskab
 
         private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
         {
-            _oldId = e.Rfid;
+            RFIDDetected(e.Rfid);
         }
 
 
-        public bool CheckId(int oldId, int Id)
+        public bool CheckId(uint oldId, uint Id)
         {
-            throw new NotImplementedException();
+            if (Id == _oldId)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
