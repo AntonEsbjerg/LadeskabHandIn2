@@ -4,7 +4,7 @@ namespace Ladeskab
 {
     public interface IJsonLogger
     {
-        string LogDoorLocked(uint rfid, DateTime time);
-        string LogDoorUnlocked(uint rfid, DateTime time);
+        IJsonFileModel LogDoorLocked(uint rfid, DateTime time);
+        IJsonFileModel LogDoorUnlocked(uint rfid, DateTime time);
     }
 }
