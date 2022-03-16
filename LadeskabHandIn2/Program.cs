@@ -39,7 +39,7 @@ namespace LadeskabHandIn2
 
                         uint id = Convert.ToUInt16(idString);
 
-                        control.OnRfidRead(id);
+                        control.RFIDDetected(id);
                         break;
 
                     default:

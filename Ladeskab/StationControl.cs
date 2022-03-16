@@ -61,7 +61,7 @@ namespace Ladeskab
             throw new NotImplementedException();
         }
 
-        public void RFIDDetected(int id)
+        public void RFIDDetected(uint id)
         {
             switch (_state)
             {
