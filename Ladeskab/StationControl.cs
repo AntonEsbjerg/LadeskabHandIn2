@@ -11,7 +11,7 @@ using Ladeskab.RfidReaders;
 
 namespace Ladeskab
 {
-    public class StationControl:IStationControl
+    public class StationControl : IStationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -138,8 +138,8 @@ namespace Ladeskab
             _oldId = e.Rfid;
         }
 
-
-        public bool CheckId(int oldId, int Id)
+        
+        public bool CheckId(uint oldId, uint Id)
         {
             throw new NotImplementedException();
         }
