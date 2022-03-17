@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Log\" />
+    <Folder Include="Logfolder\" />
   </ItemGroup>
 
 </Project>

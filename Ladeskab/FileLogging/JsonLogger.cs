@@ -27,8 +27,8 @@ namespace Ladeskab
             {
                  fileTime= fileTime.Replace(c.ToString(), "");
             }
-            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime +" Locked", json);
-            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime+ " Locked");
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Logfolder\" + fileTime +" Locked", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Logfolder\" + fileTime+ " Locked");
             IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
             return model;
         }
@@ -50,8 +50,8 @@ namespace Ladeskab
             {
                 fileTime = fileTime.Replace(c.ToString(), "");
             }
-            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime+ " Unlocked", json);
-            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Log\" + fileTime + " Unlocked");
+            File.WriteAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Logfolder\" + fileTime+ " Unlocked", json);
+            var readFile = File.ReadAllText(splitStrings[0] + @"\LadeSkabHandIn2\Ladeskab\Logfolder\" + fileTime + " Unlocked");
             IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
             return model;
         }
