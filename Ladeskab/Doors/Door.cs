@@ -10,7 +10,7 @@ namespace Ladeskab.Doors
 {
     public class Door:IDoor
     {
-        private bool IsLocked { get; set; }
+        public bool IsLocked { get; set; }
         public event EventHandler<DoorEventArgs> DoorEvent;
         public void OnDoorOpen()
         {

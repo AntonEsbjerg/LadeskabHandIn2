@@ -43,10 +43,25 @@ namespace LadeskabTest
         }
         
         [Test]
-        public void OnDoorClose_CorrectValueReceived() //tester at UnlockDoor er false
+        public void OnDoorClose_CorrectValueReceived() //tester at OnDoorClose er false
         {
             _uut.OnDoorClose();
             Assert.That(_receivedEventArgs.IsOpen, Is.EqualTo(false));
         }
+        
+        [Test]
+        public void LockDoor_CorrectValueReceived() //tester at isLock er true
+        {
+            _uut.LockDoor();
+            Assert.That(_uut.IsLocked, Is.EqualTo(true));
+        }
+        
+        [Test]
+        public void UnLockDoor_CorrectValueReceived() //tester at isLock er false
+        {
+            _uut.UnlockDoor();
+            Assert.That(_uut.IsLocked, Is.EqualTo(false));
+        }
+        
     }
 }
