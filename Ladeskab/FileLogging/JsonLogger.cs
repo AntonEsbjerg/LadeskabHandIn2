@@ -24,7 +24,7 @@ namespace Ladeskab
             string[] splitStrings;
             if (path.Contains("JenkinsData"))
             {
-                splitStrings = path.Split(@"\Ladeskab01F22");
+                splitStrings = path.Split(@"\LadeSkab01F22");
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Ladeskab
             string[] splitStrings;
             if (path.Contains("JenkinsData"))
             {
-                splitStrings = path.Split(@"\Ladeskab01F22");
+                splitStrings = path.Split(@"\LadeSkab01F22");
             }
             else
             {
