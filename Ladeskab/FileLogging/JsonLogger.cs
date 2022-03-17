@@ -25,17 +25,19 @@ namespace Ladeskab
             if (path.Contains("JenkinsData"))
             {
                 splitStrings = path.Split(@"\LadeskabTest");
+                File.WriteAllText(splitStrings[0] + @"\Ladeskab\Logfolder\" + fileTime + " Locked", json);
+
             }
             else
             {
                 splitStrings = path.Split(@"\LadeskabHandIn2");
+                File.WriteAllText(splitStrings[0] + @"\LadeskabHandIn2\Ladeskab\Logfolder\" + fileTime + " Locked", json);
             }
             string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             foreach (char c in invalid)
             {
                  fileTime= fileTime.Replace(c.ToString(), "");
             }
-            File.WriteAllText(splitStrings[0] + @"\LadeskabHandIn2\Ladeskab\Logfolder\" + fileTime +" Locked", json);
             var readFile = File.ReadAllText(splitStrings[0] + @"\LadeskabHandIn2\Ladeskab\Logfolder\" + fileTime+ " Locked");
             IJsonFileModel model = JsonSerializer.Deserialize<JsonFileModel>(readFile);
             return model;
