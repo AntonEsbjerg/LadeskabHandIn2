@@ -35,12 +35,8 @@ namespace LadeskabTest
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
-        [TestCase(12378)]
-        [TestCase(12345678)]
-        [TestCase(12323545678)]
-        [TestCase(1234567767678)]
-        [TestCase(0366355678)]
-        [TestCase(12345613242364164378)]
+        [TestCase(12378u)]
+        [TestCase(uint.MaxValue)]
 
         public void ReadRfid_CorrectValueReceived(uint id) 
         {

@@ -104,11 +104,11 @@ namespace LadeskabTest
         //    Assert.That(_uut.Current, Is.EqualTo(current));
         //}
 
-        [TestCase(1,1,true)]
-        [TestCase(5,5,true)]
-        [TestCase(1234,1234,true)]
-        [TestCase(5,10,false)]
-        [TestCase(20,5,false)]
+        [TestCase(1u,1u,true)]
+        [TestCase(5u,5u,true)]
+        [TestCase(1234u,1234u,true)]
+        [TestCase(5u,10u,false)]
+        [TestCase(20u,5u,false)]
         public void StationControl_CheckId(uint oldId, uint Id, bool expectedResult)
         {
             bool result = _uut.CheckId(oldId, Id);
