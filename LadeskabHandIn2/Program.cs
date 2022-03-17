@@ -1,6 +1,7 @@
 ﻿using System;
 using Ladeskab;
 using Ladeskab.RfidReaders;
+using Ladeskab.Doors;
 
 namespace LadeskabHandIn2
 {

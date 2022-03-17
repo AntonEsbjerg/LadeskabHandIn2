@@ -1,6 +1,7 @@
 using System;
 using Ladeskab;
 using Ladeskab.Doors;
+using Ladeskab.EventArgs;
 using Ladeskab.RfidReaders;
 using NSubstitute;
 using NUnit.Framework;
@@ -97,12 +98,12 @@ namespace LadeskabTest
             _fakeDisplay.Received(1).Print("Forkert RFID tag");
         }
 
-        //[TestCase(0)]
-        //public void HandleCurrentEvent(double current)
-        //{
-        //    _uut. += Raise.EventWith(new CurrentEventArgs() { Current = current });
-        //    Assert.That(_uut.Current, Is.EqualTo(current));
-        //}
+        [TestCase(0)]
+        public void HandleCurrentEvent(double current)
+        {
+            //_fakeDoor.DoorEvent += Raise.EventWith(new CurrentEventArgs() { IsOpen = current });
+            Assert.That(_uut.CurrentDoorStatus, Is.EqualTo(current));
+        }
 
         [TestCase(1u,1u,true)]
         [TestCase(5u,5u,true)]

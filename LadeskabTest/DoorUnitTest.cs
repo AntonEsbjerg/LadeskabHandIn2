@@ -2,6 +2,7 @@ using Ladeskab;
 using Ladeskab.Doors;
 using NUnit.Framework;
 using NSubstitute;
+using Ladeskab.EventArgs;
 
 namespace LadeskabTest
 {
@@ -16,8 +17,8 @@ namespace LadeskabTest
         {
             _receivedEventArgs = null;
             _uut = new Door();
-            _uut.LockDoor();
-            _uut.UnlockDoor();
+            _uut.OnDoorOpen();
+            _uut.OnDoorClose();
             
             //Event listener to check the event occurence and event data
             _uut.DoorEvent +=
@@ -28,23 +29,23 @@ namespace LadeskabTest
         }
         
         [Test]
-        public void LockDoor_EventFired() //tester om vi har modtaget eventet i vores door subjekt
+        public void OnDoorOpen_EventFired() //tester om vi har modtaget eventet i vores door subjekt
         {
-            _uut.LockDoor();
+            _uut.OnDoorOpen();
             Assert.That(_receivedEventArgs,Is.Not.Null); 
         }
         
         [Test]
-        public void LockDoor_CorrectValueReceived() //tester at lockDoor er true
+        public void OnDoorOpen_CorrectValueReceived() //tester at OnDoorOpen er true
         {
-            _uut.LockDoor();
+            _uut.OnDoorOpen();
             Assert.That(_receivedEventArgs.IsOpen, Is.EqualTo(true));
         }
         
         [Test]
-        public void UnLockDoor_CorrectValueReceived() //tester at UnlockDoor er false
+        public void OnDoorClose_CorrectValueReceived() //tester at UnlockDoor er false
         {
-            _uut.UnlockDoor();
+            _uut.OnDoorClose();
             Assert.That(_receivedEventArgs.IsOpen, Is.EqualTo(false));
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ladeskab.Doors
+namespace Ladeskab.EventArgs
 {
     public class DoorEventArgs : System.EventArgs
     {

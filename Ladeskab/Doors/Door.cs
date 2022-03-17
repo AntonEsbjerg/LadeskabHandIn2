@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ladeskab.Doors;
+using Ladeskab.EventArgs;
 
-namespace Ladeskab
+namespace Ladeskab.Doors
 {
     public class Door:IDoor
     {
