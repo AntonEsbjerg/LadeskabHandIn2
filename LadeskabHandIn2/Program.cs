@@ -27,7 +27,8 @@ namespace LadeskabHandIn2
             do
             {
                 string input;
-                System.Console.WriteLine("Indtast E, O, C, R: ");
+                _display.Print("Mulige indtastninger");
+                _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID");
                 input = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(input)) continue;
 
