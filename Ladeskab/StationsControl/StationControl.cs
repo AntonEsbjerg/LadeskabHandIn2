@@ -115,9 +115,9 @@ namespace Ladeskab
             RFIDDetected(e.Rfid);
         }
 
-        public bool CheckId(uint oldId, uint Id)
+        public bool CheckId(uint oldId, uint id)
         {
-            if (Id == oldId)
+            if (id == oldId)
                 return true;
 
             return false;
