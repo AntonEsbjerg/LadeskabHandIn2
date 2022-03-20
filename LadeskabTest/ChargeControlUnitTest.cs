@@ -10,12 +10,14 @@ namespace LadeskabTest
     {
         private ChargeControl _uut;
         private IUsbCharger _usbCharger;
+        private IDisplay _display;
 
         [SetUp]
         public void Setup()
         {
             _usbCharger = Substitute.For<IUsbCharger>();
-            _uut = new ChargeControl(_usbCharger);
+            _display = Substitute.For<IDisplay>();
+            _uut = new ChargeControl(_usbCharger,_display);
         }
 
         [Test]
