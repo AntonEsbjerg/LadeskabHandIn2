@@ -52,8 +52,8 @@ namespace Ladeskab
                     Time = time,
                     IsDoorLocked = false
                 };
-            string json = JsonSerializer.Serialize(jsonInput);
-            var path = Environment.CurrentDirectory;
+            string json = JsonSerializer.Serialize(jsonInput); 
+            string path = AppDomain.CurrentDomain.BaseDirectory;
             string fileTime = time.ToLongTimeString();
             string[] splitStrings;
             string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
@@ -62,12 +62,11 @@ namespace Ladeskab
             {
                 fileTime = fileTime.Replace(c.ToString(), "");
             }
-            if (path.Contains("JenkinsData"))
+            if (!path.Contains("JenkinsData"))
             {
                 splitStrings = path.Split(@"\LadeskabTest");
                 File.WriteAllText(splitStrings[0] + @"\Ladeskab\Logfolder\" + fileTime + " Unlocked", json);
                 readFile = File.ReadAllText(splitStrings[0] + @"\Ladeskab\Logfolder\" + fileTime + " Unlocked");
-
             }
             else
             {
