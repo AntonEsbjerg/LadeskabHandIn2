@@ -58,7 +58,7 @@ namespace Ladeskab
             {
                 message = null;
             }
-            if (message != null || message == lastMessage)
+            if (message != null || lastMessage !=null && message != lastMessage)
             {
                 Display.Print(message);
             }
