@@ -19,7 +19,7 @@ namespace Ladeskab
                 IsDoorLocked= true
             };
             string json = JsonSerializer.Serialize(jsonInput);
-            var path = Environment.CurrentDirectory;
+            var path = AppDomain.CurrentDomain.BaseDirectory;
             string fileTime = time.ToString(CultureInfo.CurrentCulture);
             string[] splitStrings;
             string readFile;
@@ -53,7 +53,7 @@ namespace Ladeskab
                     IsDoorLocked = false
                 };
             string json = JsonSerializer.Serialize(jsonInput);
-            var path = Environment.CurrentDirectory;
+            var path = AppDomain.CurrentDomain.BaseDirectory;
             string fileTime = time.ToString(CultureInfo.CurrentCulture);
             string[] splitStrings;
             string readFile;
