@@ -18,9 +18,9 @@ namespace LadeskabHandIn2
             // Assemble your system here from all the classes
             _door = new Door();
             _usbCharger = new UsbChargerSimulator();
-            _chargeControl = new ChargeControl(_usbCharger);
             _rfidReader = new RfidReader();
             _display = new Display();
+            _chargeControl = new ChargeControl(_usbCharger,_display);
 
             _control = new StationControl(_door, _chargeControl, _rfidReader,_display);
             bool finish = false;
