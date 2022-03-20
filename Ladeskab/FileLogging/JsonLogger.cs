@@ -54,10 +54,10 @@ namespace Ladeskab
                 };
             string json = JsonSerializer.Serialize(jsonInput);
             var path = Environment.CurrentDirectory;
-            string fileTime = time.ToLongTimeString();
+            string fileTime = time.ToString(CultureInfo.CurrentCulture);
             string[] splitStrings;
-            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             string readFile;
+            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             foreach (char c in invalid)
             {
                 fileTime = fileTime.Replace(c.ToString(), "");
@@ -67,7 +67,6 @@ namespace Ladeskab
                 splitStrings = path.Split(@"\LadeskabTest");
                 File.WriteAllText(splitStrings[0] + @"\Ladeskab\Logfolder\" + fileTime + " Unlocked", json);
                 readFile = File.ReadAllText(splitStrings[0] + @"\Ladeskab\Logfolder\" + fileTime + " Unlocked");
-
             }
             else
             {
