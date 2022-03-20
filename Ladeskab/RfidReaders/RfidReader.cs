@@ -13,10 +13,10 @@ namespace Ladeskab.RfidReaders
 
         public void ReadRfid(uint id)
         {
-            OnRfidChange(new RfidEventArgs { Rfid = id });
+            OnRfidChanged(new RfidEventArgs { Rfid = id });
         }
 
-        protected virtual void OnRfidChange(RfidEventArgs e)
+        protected virtual void OnRfidChanged(RfidEventArgs e)
         {
             RfidEvent?.Invoke(this, e);
         }

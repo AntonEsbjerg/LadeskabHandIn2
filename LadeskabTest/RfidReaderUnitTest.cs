@@ -37,12 +37,23 @@ namespace LadeskabTest
 
         [TestCase(12378u)]
         [TestCase(uint.MaxValue)]
-
+        [TestCase(uint.MinValue)]
         public void ReadRfid_CorrectValueReceived(uint id) 
         {
             _uut.ReadRfid(id);
 
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
+
+        [TestCase(12378u)]
+        public void ReadRfid_(uint id)
+        {
+            _uut.ReadRfid(id);
+            
+                
+        }
+
+
+
     }
 }
