@@ -53,5 +53,19 @@ namespace LadeskabTest
             Assert.That(_uut.Current, Is.EqualTo(current));
         }
 
+        [TestCase(double.MinValue, null,0)]
+        [TestCase(0d, null,0)]
+        [TestCase(0.1, "Batteriet er fuldt opladt og kan tages fra strømmen",1)]
+        [TestCase(5, "Batteriet er fuldt opladt og kan tages fra strømmen",1)]
+        [TestCase(5.1, "Batteriet oplader",1)]
+        [TestCase(500, "Batteriet oplader",1)]
+        [TestCase(501, "Fejl: Opladning skal afsluttes med det sammer",1)]
+        [TestCase(double.MaxValue, "Fejl: Opladning skal afsluttes med det sammer",1)]
+        public void DisplayCurrentMessage(double current, string message, int expectedCalls)
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+            _display.Received(expectedCalls).Print(message);
+        }
+
     }
 }
