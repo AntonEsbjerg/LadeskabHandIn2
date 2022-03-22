@@ -37,6 +37,7 @@ namespace Ladeskab
         public void UnplugPhone()
         {
             Connected = false;
+            lastMessage = null;
         }
 
         private void DiplayChargeMessage()
