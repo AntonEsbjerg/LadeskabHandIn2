@@ -58,11 +58,11 @@ namespace Ladeskab
             {
                 message = null;
             }
-            if (message != null || lastMessage !=null && message != lastMessage)
+            if (message != null  && message != lastMessage)
             {
                 Display.Print(message);
+                lastMessage = message;
             }
-            lastMessage = message;
         }
 
         private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
