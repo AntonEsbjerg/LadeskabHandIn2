@@ -10,10 +10,6 @@ namespace Ladeskab.RfidReaders
     public interface IRfidReader
     {
         public event EventHandler<RfidEventArgs> RfidEvent;
-
-
-
-
         public void ReadRfid(uint id, DateTime time);
 
     }

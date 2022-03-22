@@ -19,7 +19,6 @@ namespace Ladeskab
             Locked,
             DoorOpen
         };
-
         public LadeskabState _state;
         public uint _oldId;
         private IDoor _door;
@@ -28,9 +27,7 @@ namespace Ladeskab
         public bool CurrentDoorStatus;
         private IRfidReader _reader;
         private IJsonLogger _jsonLogger;
-
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
         public StationControl(IDoor door, IChargeControl chargeControl, IRfidReader reader, IDisplay display, IJsonLogger jsonLogger)
         {
             _door = door;
@@ -38,21 +35,17 @@ namespace Ladeskab
             _reader = reader;
             _display = display;
             _jsonLogger = jsonLogger;
-
             door.DoorEvent += HandleDoorChangedEvent;
             reader.RfidEvent += HandleRfidChangedEvent;
         }
-        
         public void DoorOpened()
         {
             _display.Print("Tilslut telefon");
         }
-
         public void DoorClosed()
         {
             _display.Print("Indlæs RFID");
         }
-
         public void RFIDDetected(uint id, DateTime time)
         {
             switch (_state)
@@ -80,7 +73,6 @@ namespace Ladeskab
                         _display.Print("Din telefon er ikke ordentlig tilsluttet. " +
                                           "Prøv igen.");
                     }
-
                     break;
 
                 case LadeskabState.DoorOpen:
@@ -104,26 +96,21 @@ namespace Ladeskab
                     {
                         _display.Print("Forkert RFID tag"); //RFID Fejl
                     }
-
                     break;
             }
         }
-
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
         {
             CurrentDoorStatus = e.IsOpen;
         }
-
         private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
         {
             RFIDDetected(e.Rfid,DateTime.Now);
         }
-
         public bool CheckId(uint oldId, uint id)
         {
             if (id == oldId)
                 return true;
-
             return false;
         }
     }
