@@ -66,6 +66,15 @@ namespace LadeskabTest
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
             _display.Received(expectedCalls).Print(message);
         }
+        [TestCase(500, "Batteriet oplader", 1)]
+        [TestCase(501, "Fejl: Opladning skal afsluttes med det sammer", 1)]
+        [TestCase(double.MaxValue, "Fejl: Opladning skal afsluttes med det sammer", 1)]
+        public void DisplayDontDisplayDuplicatemessage(double current, string message, int expectedCalls)
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+            _display.Received(expectedCalls).Print(message);
+        }
 
     }
 }
