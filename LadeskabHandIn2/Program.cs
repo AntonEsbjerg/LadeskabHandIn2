@@ -13,6 +13,7 @@ namespace LadeskabHandIn2
         private static IChargeControl _chargeControl;
         private static IRfidReader _rfidReader;
         private static IDisplay _display;
+        private static IJsonLogger _jsonLogger;
         static void Main(string[] args)
         {
             // Assemble your system here from all the classes
@@ -21,8 +22,9 @@ namespace LadeskabHandIn2
             _rfidReader = new RfidReader();
             _display = new Display();
             _chargeControl = new ChargeControl(_usbCharger,_display);
+            _jsonLogger = new JsonLogger();
 
-            _control = new StationControl(_door, _chargeControl, _rfidReader,_display);
+            _control = new StationControl(_door, _chargeControl, _rfidReader,_display, _jsonLogger);
             bool finish = false;
             do
             {
@@ -52,7 +54,7 @@ namespace LadeskabHandIn2
 
                         uint id = Convert.ToUInt16(idString);
 
-                        _rfidReader.ReadRfid(id);
+                        _rfidReader.ReadRfid(id,DateTime.Now);
                         break;
 
                     default:

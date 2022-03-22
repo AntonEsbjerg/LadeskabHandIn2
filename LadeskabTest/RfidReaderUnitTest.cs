@@ -1,4 +1,5 @@
-﻿using Ladeskab;
+﻿using System;
+using Ladeskab;
 using Ladeskab.Doors;
 using Ladeskab.EventArgs;
 using Ladeskab.RfidReaders;
@@ -31,7 +32,7 @@ namespace LadeskabTest
         public void ReadRfid_EventFired() 
 
         {
-            _uut.ReadRfid(1);
+            _uut.ReadRfid(1,DateTime.Now);
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
@@ -40,7 +41,7 @@ namespace LadeskabTest
         [TestCase(uint.MinValue)]
         public void ReadRfid_CorrectValueReceived(uint id) 
         {
-            _uut.ReadRfid(id);
+            _uut.ReadRfid(id,DateTime.Now);
 
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
@@ -48,12 +49,7 @@ namespace LadeskabTest
         [TestCase(12378u)]
         public void ReadRfid_(uint id)
         {
-            _uut.ReadRfid(id);
-            
-                
+            _uut.ReadRfid(id,DateTime.Now);
         }
-
-
-
     }
 }

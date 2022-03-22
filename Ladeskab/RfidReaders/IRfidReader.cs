@@ -14,7 +14,7 @@ namespace Ladeskab.RfidReaders
 
 
 
-        public void ReadRfid(uint id);
+        public void ReadRfid(uint id, DateTime time);
 
     }
 }

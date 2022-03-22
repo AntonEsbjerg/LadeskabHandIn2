@@ -10,7 +10,7 @@ namespace Ladeskab
     {
         public void DoorOpened();
         public void DoorClosed();
-        public void RFIDDetected(uint id);
+        public void RFIDDetected(uint id, DateTime time);
         public bool CheckId(uint oldId, uint id);
     }
 }
