@@ -26,11 +26,13 @@ namespace LadeskabHandIn2
 
             _control = new StationControl(_door, _chargeControl, _rfidReader,_display, _jsonLogger);
             bool finish = false;
+
+            _display.Print("\nMulige indtastninger");
+            _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID\nP=Plugin\nU=Unplug");
+
             do
             {
                 string input;
-                _display.Print("\nMulige indtastninger");
-                _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID\n");
                 input = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(input)) continue;
 
@@ -55,6 +57,14 @@ namespace LadeskabHandIn2
                         uint id = Convert.ToUInt16(idString);
 
                         _rfidReader.ReadRfid(id,DateTime.Now);
+                        break;
+
+                    case 'P':
+                        _chargeControl.PluginPhone();
+                        break;
+
+                    case 'U':
+                        _chargeControl.UnplugPhone();
                         break;
 
                     default:
