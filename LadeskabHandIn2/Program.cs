@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Ladeskab;
 using Ladeskab.RfidReaders;
 using Ladeskab.Doors;
@@ -29,8 +29,8 @@ namespace LadeskabHandIn2
             do
             {
                 string input;
-                _display.Print("Mulige indtastninger");
-                _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID");
+                _display.Print("\nMulige indtastninger");
+                _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID\n");
                 input = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(input)) continue;
 

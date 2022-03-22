@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -102,6 +102,10 @@ namespace Ladeskab
         private void HandleDoorChangedEvent(object sender, DoorEventArgs e)
         {
             CurrentDoorStatus = e.IsOpen;
+            if(CurrentDoorStatus)
+                DoorOpened();
+            else
+                DoorClosed();
         }
         private void HandleRfidChangedEvent(object sender, RfidEventArgs e)
         {
