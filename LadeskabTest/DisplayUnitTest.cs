@@ -1,4 +1,5 @@
-﻿using Ladeskab;
+﻿using System;
+using Ladeskab;
 using NUnit.Framework;
 using NSubstitute;
 
