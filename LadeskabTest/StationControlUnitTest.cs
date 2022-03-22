@@ -16,6 +16,7 @@ namespace LadeskabTest
         private IChargeControl _fakeChargeControl;
         private IRfidReader _fakeReader;
         private IDisplay _fakeDisplay;
+        private IJsonLogger _fakeJsonLogger;
         
         
         [SetUp]
@@ -25,7 +26,8 @@ namespace LadeskabTest
             _fakeChargeControl = Substitute.For<IChargeControl>();
             _fakeReader = Substitute.For<IRfidReader>();
             _fakeDisplay = Substitute.For<IDisplay>();
-            _uut = new StationControl(_fakeDoor, _fakeChargeControl, _fakeReader, _fakeDisplay);
+            _fakeJsonLogger = Substitute.For<IJsonLogger>();
+            _uut = new StationControl(_fakeDoor, _fakeChargeControl, _fakeReader, _fakeDisplay,_fakeJsonLogger);
         }
 
         [Test]
@@ -47,7 +49,7 @@ namespace LadeskabTest
             _uut._state = StationControl.LadeskabState.Available;
             _fakeChargeControl.Connected = true;
 
-            _uut.RFIDDetected(Convert.ToUInt32(id));
+            _uut.RFIDDetected(Convert.ToUInt32(id),DateTime.Now);
 
             _fakeDoor.Received(1).LockDoor();
             _fakeChargeControl.Received(1).StartCharge();
@@ -60,7 +62,7 @@ namespace LadeskabTest
             _uut._state = StationControl.LadeskabState.Available;
             _fakeChargeControl.Connected = false;
 
-            _uut.RFIDDetected(Convert.ToUInt32(id));
+            _uut.RFIDDetected(Convert.ToUInt32(id), DateTime.Now);
 
             _fakeDisplay.Received(1).Print("Din telefon er ikke ordentlig tilsluttet. " + "Prøv igen.");
         }
@@ -69,7 +71,7 @@ namespace LadeskabTest
         {
             _uut._state = StationControl.LadeskabState.DoorOpen;
 
-            _uut.RFIDDetected(Convert.ToUInt32(id));
+            _uut.RFIDDetected(Convert.ToUInt32(id),DateTime.Now);
 
             _fakeDisplay.Received(1).Print("The door is open...");
         }
@@ -80,7 +82,7 @@ namespace LadeskabTest
             _uut._state = StationControl.LadeskabState.Locked;
             _uut._oldId = Convert.ToUInt32(oldId);
 
-            _uut.RFIDDetected(Convert.ToUInt32(id));
+            _uut.RFIDDetected(Convert.ToUInt32(id), DateTime.Now);
 
             _fakeChargeControl.Received(1).StopCharge();
             _fakeDoor.Received(1).UnlockDoor();
@@ -93,7 +95,7 @@ namespace LadeskabTest
             _uut._state = StationControl.LadeskabState.Locked;
             _uut._oldId = Convert.ToUInt32(oldId);
 
-            _uut.RFIDDetected(Convert.ToUInt32(id));
+            _uut.RFIDDetected(Convert.ToUInt32(id),DateTime.Now);
 
             _fakeDisplay.Received(1).Print("Forkert RFID tag");
         }
@@ -114,6 +116,26 @@ namespace LadeskabTest
         {
             bool result = _uut.CheckId(oldId, Id);
             Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void StationControl_DoorClosed_LoggerDoorLockedIsCalled()
+        {
+            DateTime time= DateTime.Now;
+            _uut._state = StationControl.LadeskabState.Available;
+            _fakeChargeControl.Connected.Returns(true);
+            _uut.RFIDDetected(123,time);
+            _fakeJsonLogger.Received(1).LogDoorLocked(123, time);
+        }
+        [Test]
+        public void StationControl_DoorOpened_LoggerDoorUnlockedIsCalled()
+        {
+             DateTime time = DateTime.Now;
+            _uut._oldId = 123;
+            _uut._state = StationControl.LadeskabState.Locked;
+            _fakeChargeControl.Connected.Returns(true);
+            _uut.RFIDDetected(123, time);
+            _fakeJsonLogger.Received(1).LogDoorUnlocked(123, time);
         }
     }
 }
