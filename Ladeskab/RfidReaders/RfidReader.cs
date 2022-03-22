@@ -11,9 +11,9 @@ namespace Ladeskab.RfidReaders
     {
         public event EventHandler<RfidEventArgs> RfidEvent;
 
-        public void ReadRfid(uint id)
+        public void ReadRfid(uint id, DateTime time)
         {
-            OnRfidChanged(new RfidEventArgs { Rfid = id });
+            OnRfidChanged(new RfidEventArgs { Rfid = id, Time = time});
         }
 
         protected virtual void OnRfidChanged(RfidEventArgs e)
