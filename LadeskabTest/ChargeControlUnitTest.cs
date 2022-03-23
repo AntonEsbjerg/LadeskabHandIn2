@@ -1,4 +1,5 @@
-﻿using Ladeskab;
+﻿using System.Threading;
+using Ladeskab;
 using Ladeskab.Doors;
 using NSubstitute;
 using NUnit.Framework;
@@ -75,6 +76,8 @@ namespace LadeskabTest
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
             _display.Received(expectedCalls).Print(message);
         }
+
+
 
     }
 }

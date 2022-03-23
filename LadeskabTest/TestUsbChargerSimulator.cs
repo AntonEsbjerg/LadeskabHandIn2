@@ -12,11 +12,23 @@ namespace LadeskabTest
     [TestFixture]
     public class TestUsbChargerSimulator
     {
+
+        private CurrentEventArgs _receivedEventArgs;
         private UsbChargerSimulator _uut;
         [SetUp]
         public void Setup()
         {
             _uut = new UsbChargerSimulator();
+        }
+
+        [Test]
+        public void CurrentEventArgsTest()
+        {
+            _uut.StartCharge();
+            Thread.Sleep(100);
+
+
+            Assert.That(_receivedEventArgs, Is.Null);
         }
 
         [Test]
