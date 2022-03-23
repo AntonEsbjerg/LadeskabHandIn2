@@ -3,6 +3,7 @@ using Ladeskab.Doors;
 using NUnit.Framework;
 using NSubstitute;
 using Ladeskab.EventArgs;
+using NSubstitute.ReceivedExtensions;
 
 namespace LadeskabTest
 {
@@ -11,6 +12,7 @@ namespace LadeskabTest
     {
         private Door _uut;
         private DoorEventArgs _receivedEventArgs;
+        private IStationControl fakeStationControl;
         
         [SetUp]
         public void Setup()
@@ -19,6 +21,7 @@ namespace LadeskabTest
             _uut = new Door();
             _uut.OnDoorOpen();
             _uut.OnDoorClose();
+            fakeStationControl = Substitute.For<IStationControl>();
             
             //Event listener to check the event occurence and event data
             _uut.DoorEvent +=
@@ -62,6 +65,18 @@ namespace LadeskabTest
             _uut.UnlockDoor();
             Assert.That(_uut.IsLocked, Is.EqualTo(false));
         }
+
+        [Test]
+        public void OnDoorChanged_InvokesHandleDoorChanges()
+        {
+            bool boolean;
+            _uut.DoorEvent += (o, args) =>
+            {
+                boolean = true;
+            };
+            fakeStationControl.Received(1).DoorOpened();
+        }
+
         
     }
 }
