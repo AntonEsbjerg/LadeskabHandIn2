@@ -46,10 +46,6 @@ namespace LadeskabTest
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
 
-        [TestCase(12378u)]
-        public void ReadRfid_(uint id)
-        {
-            _uut.ReadRfid(id,DateTime.Now);
-        }
+
     }
 }
