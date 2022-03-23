@@ -5,6 +5,7 @@ using Ladeskab.EventArgs;
 using Ladeskab.RfidReaders;
 using NUnit.Framework;
 using NSubstitute;
+using NSubstitute.ClearExtensions;
 
 namespace LadeskabTest
 {
@@ -13,8 +14,9 @@ namespace LadeskabTest
     {
         private RfidReader _uut;
         private RfidEventArgs _receivedEventArgs;
+        //private RfidReader subReader = Substitute.For<RfidReader>();
 
-        [SetUp]
+            [SetUp]
         public void Setup()
         {
             _receivedEventArgs = null;
@@ -55,6 +57,15 @@ namespace LadeskabTest
             _uut.ReadRfid(id, date = DateTime.Now);
 
             Assert.That(_receivedEventArgs.Time, Is.EqualTo(date));
+        }
+        [TestCase(12378u)]
+        [TestCase(uint.MaxValue)]
+        [TestCase(uint.MinValue)]
+        public void ReadRfid_WrongValueReceived(uint id)
+        {
+            _uut.ReadRfid(id+1, DateTime.Now);
+
+            Assert.That(_receivedEventArgs.Rfid, Is.Not.EqualTo(id));
         }
 
     }
