@@ -39,6 +39,8 @@ namespace LadeskabTest
         [Test]
         public void StationControl_DoorClosed_IsCalled()
         {
+            _uut.CurrentDoorStatus = false;
+            _fakeChargeControl.Connected.Returns(true);
             _uut.DoorClosed();
             _fakeDisplay.Received(1).Print("Indlæs RFID");
         }
@@ -136,6 +138,50 @@ namespace LadeskabTest
             _fakeChargeControl.Connected.Returns(true);
             _uut.RFIDDetected(123, time);
             _fakeJsonLogger.Received(1).LogDoorUnlocked(123, time);
+        }
+
+        [Test]
+        public void StationControl_DoorEventHandler_Open()
+        {
+            var Dooropen = false;
+            _fakeDoor.DoorEvent += (sender, args) => Dooropen = false;
+            //Tell the substitute to raise the event with a sender and EventArgs:
+            DoorEventArgs eventArgs = new DoorEventArgs();
+            eventArgs.IsOpen = true;
+            _fakeDoor.DoorEvent += Raise.EventWith(new object(), eventArgs);
+            Assert.That(_uut.CurrentDoorStatus, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void StationControl_DoorEventHandler_Close()
+        {
+            var Dooropen = true;
+            _fakeDoor.DoorEvent += (sender, args) => Dooropen = true;
+            //Tell the substitute to raise the event with a sender and EventArgs:
+            DoorEventArgs eventArgs = new DoorEventArgs();
+            eventArgs.IsOpen = false;
+            _fakeDoor.DoorEvent += Raise.EventWith(new object(), eventArgs);
+            Assert.That(_uut.CurrentDoorStatus, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void StationControl_RFIDEventHandler()
+        {
+            uint rfid = 111u;
+            DateTime time= DateTime.Now;
+            _uut._state = StationControl.LadeskabState.Available;
+            _fakeChargeControl.Connected.Returns(true);
+            _fakeReader.RfidEvent += (sender, args) =>
+            {
+                rfid = 111;
+                time = DateTime.Now;
+            };
+            RfidEventArgs eventArgs = new RfidEventArgs();
+            eventArgs.Time = time;
+            eventArgs.Rfid = rfid;
+            //Tell the substitute to raise the event with a sender and EventArgs:
+           _fakeReader.RfidEvent += Raise.EventWith(new object(), eventArgs);
+           Assert.That(_uut._oldId,Is.EqualTo(rfid));
         }
     }
 }
