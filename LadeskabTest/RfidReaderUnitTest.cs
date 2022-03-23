@@ -38,13 +38,13 @@ namespace LadeskabTest
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
-        [Test]
-        public void ReadRfid_EventFiredNull()
-        {
+        //[Test]
+        //public void ReadRfid_EventFiredNull()
+        //{
 
-            _uut.RfidEvent += null;
-            Assert.That(_receivedEventArgs, Is.Null);
-        }
+        //    _uut.RfidEvent += null;
+        //    Assert.That(_receivedEventArgs, Is.Null);
+        //}
 
         [TestCase(12378u)]
         [TestCase(uint.MaxValue)]
