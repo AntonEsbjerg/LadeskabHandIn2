@@ -83,9 +83,7 @@ namespace LadeskabTest
         {
             _uut._state = StationControl.LadeskabState.Locked;
             _uut._oldId = Convert.ToUInt32(oldId);
-
             _uut.RFIDDetected(Convert.ToUInt32(id), DateTime.Now);
-
             _fakeChargeControl.Received(1).StopCharge();
             _fakeDoor.Received(1).UnlockDoor();
             _fakeDisplay.Received(1).Print("Tag din telefon ud af skabet og luk døren");
