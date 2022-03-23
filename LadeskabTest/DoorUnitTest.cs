@@ -65,18 +65,5 @@ namespace LadeskabTest
             _uut.UnlockDoor();
             Assert.That(_uut.IsLocked, Is.EqualTo(false));
         }
-
-        [Test]
-        public void OnDoorChanged_InvokesHandleDoorChanges()
-        {
-            bool boolean;
-            _uut.DoorEvent += (o, args) =>
-            {
-                boolean = true;
-            };
-            fakeStationControl.Received(1).DoorOpened();
-        }
-
-        
     }
 }
