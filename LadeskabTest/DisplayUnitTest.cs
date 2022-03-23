@@ -13,14 +13,14 @@ namespace LadeskabTest
         [SetUp]
         public void Setup()
         {
-            _uut = Substitute.For<IDisplay>();
+            _uut = new Display();
         }
 
         [TestCase("Hej")]
         public void Display_Print(string text)
         {
             _uut.Print(text);
-            _uut.Received(1).Print(text);
+            Assert.That(_uut.Message, Is.EqualTo(text));
         }
     }
 }

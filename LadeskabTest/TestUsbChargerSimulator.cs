@@ -243,8 +243,5 @@ namespace LadeskabTest
             // No new value received
             Assert.That(lastValue, Is.EqualTo(1000.0));
         }
-
-
-
     }
 }

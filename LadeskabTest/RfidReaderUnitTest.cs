@@ -31,20 +31,18 @@ namespace LadeskabTest
         }
 
         [Test]
-        public void ReadRfid_EventFired() 
-
+        public void ReadRfid_EventFired()
         {
             _uut.ReadRfid(1,DateTime.Now);
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
-        //[Test]
-        //public void ReadRfid_EventFiredNull()
-        //{
-
-        //    _uut.RfidEvent += null;
-        //    Assert.That(_receivedEventArgs, Is.Null);
-        //}
+        [Test]
+        public void ReadRfid_EventFiredNull()
+        {
+            _uut.RfidEvent += null;
+            Assert.That(_receivedEventArgs, Is.Null);
+        }
 
         [TestCase(12378u)]
         [TestCase(uint.MaxValue)]
@@ -52,7 +50,6 @@ namespace LadeskabTest
         public void ReadRfid_CorrectValueReceivedRfid(uint id) 
         {
             _uut.ReadRfid(id,DateTime.Now);
-
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
 
@@ -63,7 +60,6 @@ namespace LadeskabTest
         {
             DateTime date = new DateTime();
             _uut.ReadRfid(id, date = DateTime.Now);
-
             Assert.That(_receivedEventArgs.Time, Is.EqualTo(date));
         }
 
@@ -73,7 +69,6 @@ namespace LadeskabTest
         public void ReadRfid_WrongValueReceived(uint id)
         {
             _uut.ReadRfid(id+1, DateTime.Now);
-
             Assert.That(_receivedEventArgs.Rfid, Is.Not.EqualTo(id));
         }
 
