@@ -1,12 +1,8 @@
 ﻿using System;
+using Ladeskab.EventArgs;
 
 namespace Ladeskab
 {
-    public class CurrentEventArgs : System.EventArgs
-    {
-        // Value in mA (milliAmpere)
-        public double Current { set; get; }
-    }
     public interface IUsbCharger
     {
         // Event triggered on new current value

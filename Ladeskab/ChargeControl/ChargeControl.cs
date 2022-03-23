@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlTypes;
+using Ladeskab.EventArgs;
 
 namespace Ladeskab
 {
