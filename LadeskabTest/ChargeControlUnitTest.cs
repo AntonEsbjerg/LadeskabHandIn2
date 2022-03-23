@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Ladeskab;
 using Ladeskab.Doors;
+using Ladeskab.EventArgs;
 using NSubstitute;
 using NUnit.Framework;
 
