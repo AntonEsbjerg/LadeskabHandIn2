@@ -44,7 +44,8 @@ namespace Ladeskab
         }
         public void DoorClosed()
         {
-            _display.Print("Indlæs RFID");
+            if(_chargeControl.Connected)
+                _display.Print("Indlæs RFID");
         }
         public void RFIDDetected(uint id, DateTime time)
         {
