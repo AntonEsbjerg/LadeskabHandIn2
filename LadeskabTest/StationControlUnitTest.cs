@@ -137,5 +137,26 @@ namespace LadeskabTest
             _uut.RFIDDetected(123, time);
             _fakeJsonLogger.Received(1).LogDoorUnlocked(123, time);
         }
+
+        [Test]
+        public void StationControl_DoorEventHandler_Open()
+        {
+            Assert.That(_uut.CurrentDoorStatus,Is.EqualTo(true));
+        }
+        [Test]
+        public void StationControl_DoorEventHandler_Close()
+        {
+            _fakeDoor.OnDoorClose();
+
+            Assert.That(_uut.CurrentDoorStatus,Is.EqualTo(false));
+        }
+        [Test]
+        public void StationControl_RFIDEventHandler()
+        {
+            DateTime time = DateTime.Now;
+            _fakeReader.ReadRfid(20,time);
+
+            _uut.Received(1).RFIDDetected(20,time);
+        }
     }
 }
