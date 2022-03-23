@@ -41,6 +41,8 @@ namespace LadeskabTest
         [Test]
         public void ReadRfid_EventFiredNull()
         {
+
+            _uut.RfidEvent += null;
             Assert.That(_receivedEventArgs, Is.Null);
         }
 
