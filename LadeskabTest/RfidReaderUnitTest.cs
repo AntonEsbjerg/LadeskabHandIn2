@@ -64,6 +64,7 @@ namespace LadeskabTest
 
             Assert.That(_receivedEventArgs.Time, Is.EqualTo(date));
         }
+
         [TestCase(12378u)]
         [TestCase(uint.MaxValue)]
         [TestCase(uint.MinValue)]
