@@ -39,13 +39,23 @@ namespace LadeskabTest
         [TestCase(12378u)]
         [TestCase(uint.MaxValue)]
         [TestCase(uint.MinValue)]
-        public void ReadRfid_CorrectValueReceived(uint id) 
+        public void ReadRfid_CorrectValueReceivedRfid(uint id) 
         {
             _uut.ReadRfid(id,DateTime.Now);
 
             Assert.That(_receivedEventArgs.Rfid, Is.EqualTo(id));
         }
 
+        [TestCase(12378u)]
+        [TestCase(uint.MaxValue)]
+        [TestCase(uint.MinValue)]
+        public void ReadRfid_CorrectValueReceivedDateTime(uint id)
+        {
+            DateTime date = new DateTime();
+            _uut.ReadRfid(id, date = DateTime.Now);
+
+            Assert.That(_receivedEventArgs.Time, Is.EqualTo(date));
+        }
 
     }
 }
