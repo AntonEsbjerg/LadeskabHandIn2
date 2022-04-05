@@ -49,7 +49,6 @@ namespace LadeskabTest
         [TestCase(5)]
         public void StationControl_RFIDDetected_AvailableAndPhoneConnectet(int id)
         {
-            //_uut._state = StationControl.LadeskabState.Available;
             
             _fakeChargeControl.Connected = true;
 
@@ -80,17 +79,7 @@ namespace LadeskabTest
             _fakeDisplay.Received(1).Print("The door is open...");
         }
 
-        //[TestCase(5,5)]
-        //public void StationControl_RFIDDetected_Locked_MatchingId(int oldId,int id)
-        //{
-        //    _uut._state = StationControl.LadeskabState.Locked;
-        //    _uut._oldId = Convert.ToUInt32(oldId);
-        //    _uut.RFIDDetected(Convert.ToUInt32(id), DateTime.Now);
-        //    _fakeChargeControl.Received(1).StopCharge();
-        //    _fakeDoor.Received(1).UnlockDoor();
-        //    _fakeDisplay.Received(1).Print("Tag din telefon ud af skabet og luk døren");
-        //    Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Available));
-        //}
+  
         [TestCase(2u,5u)]
         public void StationControl_RFIDDetected_Locked_InvalidId(uint Id, uint wrongId)
         {
@@ -113,13 +102,6 @@ namespace LadeskabTest
             _fakeReader.RfidEvent += Raise.EventWith(new object(), eventArgs);
             _fakeDisplay.Received(1).Print("Forkert RFID tag");
         }
-
-        // [TestCase(0)]
-        // public void HandleCurrentEvent(double current)
-        // {
-        //     //_fakeDoor.DoorEvent += Raise.EventWith(new CurrentEventArgs() { IsOpen = current });
-        //     Assert.That(_uut.CurrentDoorStatus, Is.EqualTo(current));
-        // }
 
         [TestCase(1u,1u,true)]
         [TestCase(5u,5u,true)]
@@ -158,7 +140,6 @@ namespace LadeskabTest
         {
             var Dooropen = false;
             _fakeDoor.DoorEvent += (sender, args) => Dooropen = false;
-            //Tell the substitute to raise the event with a sender and EventArgs:
             DoorEventArgs eventArgs = new DoorEventArgs();
             eventArgs.IsOpen = true;
             _fakeDoor.DoorEvent += Raise.EventWith(new object(), eventArgs);
@@ -170,7 +151,6 @@ namespace LadeskabTest
         {
             var Dooropen = true;
             _fakeDoor.DoorEvent += (sender, args) => Dooropen = true;
-            //Tell the substitute to raise the event with a sender and EventArgs:
             DoorEventArgs eventArgs = new DoorEventArgs();
             eventArgs.IsOpen = false;
             _fakeDoor.DoorEvent += Raise.EventWith(new object(), eventArgs);
