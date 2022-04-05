@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Ladeskab;
 using Ladeskab.RfidReaders;
 using Ladeskab.Doors;
@@ -14,13 +15,15 @@ namespace LadeskabHandIn2
         private static IRfidReader _rfidReader;
         private static IDisplay _display;
         private static IJsonLogger _jsonLogger;
+        private static StringWriter _sw;
         static void Main(string[] args)
         {
             // Assemble your system here from all the classes
             _door = new Door();
+            _sw = new StringWriter();
             _usbCharger = new UsbChargerSimulator();
             _rfidReader = new RfidReader();
-            _display = new Display();
+            _display = new Display(_sw);
             _chargeControl = new ChargeControl(_usbCharger,_display);
             _jsonLogger = new JsonLogger();
 
