@@ -9,6 +9,5 @@ namespace Ladeskab
     public interface IDisplay
     {
         public void Print(string message);
-        public string Message { get; set; }
     }
 }
