@@ -26,13 +26,10 @@ namespace LadeskabHandIn2
             _display = new Display(_sw);
             _chargeControl = new ChargeControl(_usbCharger,_display);
             _jsonLogger = new JsonLogger();
-
             _control = new StationControl(_door, _chargeControl, _rfidReader,_display, _jsonLogger);
             bool finish = false;
-
             _display.Print("\nMulige indtastninger");
             _display.Print("E = Exit\nO = Open\nC = Close\nR=RFID\nP=Plugin\nU=Unplug");
-
             do
             {
                 string input;
@@ -44,32 +41,24 @@ namespace LadeskabHandIn2
                     case 'E':
                         finish = true;
                         break;
-
                     case 'O':
                         _door.OnDoorOpen();
                         break;
-
                     case 'C':
                         _door.OnDoorClose();
                         break;
-
                     case 'R':
                         Console.WriteLine("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
-
                         uint id = Convert.ToUInt16(idString);
-
                         _rfidReader.ReadRfid(id,DateTime.Now);
                         break;
-
                     case 'P':
                         _chargeControl.PluginPhone();
                         break;
-
                     case 'U':
                         _chargeControl.UnplugPhone();
                         break;
-
                     default:
                         break;
                 }
