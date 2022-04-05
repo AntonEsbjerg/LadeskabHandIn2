@@ -19,8 +19,9 @@ namespace Ladeskab
             Locked,
             DoorOpen
         };
-        public LadeskabState _state;
-        public uint _oldId;
+
+        private LadeskabState _state = LadeskabState.Available;
+        private uint _oldId;
         private IDoor _door;
         private IDisplay _display;
         private IChargeControl _chargeControl;
@@ -40,6 +41,7 @@ namespace Ladeskab
         }
         public void DoorOpened()
         {
+            _state = LadeskabState.DoorOpen;
             _display.Print("Tilslut telefon");
         }
         public void DoorClosed()
